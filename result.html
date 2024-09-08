@@ -45,6 +45,35 @@
             background-color: #555;
             border-color: #555;
         }
+        .progress-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            margin-top: 30px;
+        }
+        .progress-bar {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                #3498db calc(var(--percentage) * 1%),
+                #e0e0e0 calc(var(--percentage) * 1%)
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #timeLeft {
+            font-size: 1.5rem;
+            color: #ff0000; /* Red color for the timer numbers */
+        }
+        #timerMessage {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #333;
+        }
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -62,7 +91,16 @@
         <h2>Thank You for Taking the Quiz!</h2>
         <p>Your score is: <span id="scoreDisplay"></span></p>
         <p>Goodbye, and get ready for the next quiz!</p>
-        <a href="start.html" class="btn btn-dark">Back to Start</a>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar" style="--percentage: 100;">
+                <div id="timeLeft">2:00</div>
+            </div>
+        </div>
+
+        <p id="timerMessage">You'd be able to view answers when the timer is done</p>
+
+        <a href="answers.html" class="btn btn-dark" id="viewAnswersBtn" style="display: none; margin-top: 20px;">View Correct Answers</a>
     </div>
 
     <script>
@@ -74,6 +112,35 @@
 
         // Clear the score from localStorage after displaying it
         localStorage.removeItem("quizScore");
+
+        // Timer logic
+        let timeRemaining = 120; // 2 minutes in seconds
+        const progressBar = document.getElementById('progressBar');
+        const timeLeftElement = document.getElementById('timeLeft');
+        const viewAnswersBtn = document.getElementById('viewAnswersBtn');
+        const totalTime = 120; // Total time for calculation
+
+        const countdownInterval = setInterval(() => {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+
+            // Update the time display
+            timeLeftElement.textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+
+            // Calculate the percentage of time left
+            const percentage = (timeRemaining / totalTime) * 100;
+            progressBar.style.setProperty('--percentage', percentage);
+
+            // Check if the time has run out
+            if (timeRemaining <= 0) {
+                clearInterval(countdownInterval);
+                // Show the button and change the timer text
+                timeLeftElement.textContent = "Time's up!";
+                viewAnswersBtn.style.display = 'inline-block';
+            }
+
+            timeRemaining--;
+        }, 1000);
     </script>
 </body>
 </html>

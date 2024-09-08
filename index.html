@@ -1,360 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
-    <title>Science Quiz</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Welcome to the Science Quiz</title>
     <style>
         body {
-            background-color: rgb(54, 54, 56);
+            background: linear-gradient(to right, #2c3e50, #bdc3c7);
             color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
         }
-
-        .quiz-container {
-            background: rgb(238, 235, 235);
-            color: black;
-            padding: 30px;
-            margin: auto;
-            margin-top: 50px;
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border-radius: 12px;
             box-shadow: 0px 0px 10px rgb(0, 0, 0);
-            max-width: 600px;
-            border-radius: 10px;
         }
-
-        .question {
+        .btn-dark {
+            background-color: #333;
+            border-color: #333;
+        }
+        .btn-dark:hover {
+            background-color: #555;
+            border-color: #555;
+        }
+        h1 {
+            font-size: 2.5rem;
             margin-bottom: 20px;
         }
-
-        .btn-submit {
-            margin-top: 20px;
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: rgb(84, 0, 0);
         }
-
-        .alert {
-            display: none;
-        }
-
-        #timer {
-            font-weight: bold;
+        .icon {
+            font-size: 4rem;
             margin-bottom: 20px;
-        }
-
-        textarea {
-            resize: none;
+            color: #ffffff;
         }
     </style>
 </head>
-
 <body>
-
-<div class="container quiz-container">
-    <h2 class="text-center">Science Quiz Questions</h2>
-    <div id="timer" class="text-center">Time Remaining: 05:00</div> <!-- Timer Display -->
-    <form id="quizForm">
-
-        <!-- Quiz Questions -->
-        <div class="question mb-3">
-            <label>Question 1: What is the boiling point of water?</label><br>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question1" value="100°C" required>
-                <label class="form-check-label">100°C</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question1" value="50°C">
-                <label class="form-check-label">50°C</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question1" value="0°C">
-                <label class="form-check-label">0°C</label>
-            </div>
-            <div class="alert alert-danger" role="alert">Please answer this question.</div>
-        </div>
-
-        <div class="question mb-3">
-            <label>Question 2: What planet is known as the Red Planet?</label><br>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question2" value="Mars" required>
-                <label class="form-check-label">Mars</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question2" value="Venus">
-                <label class="form-check-label">Venus</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question2" value="Jupiter">
-                <label class="form-check-label">Jupiter</label>
-            </div>
-            <div class="alert alert-danger" role="alert">Please answer this question.</div>
-        </div>
-
-        <div class="question mb-3">
-            <label>Question 3: What is the largest planet in our solar system?</label><br>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question3" value="Jupiter" required>
-                <label class="form-check-label">Jupiter</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question3" value="Saturn">
-                <label class="form-check-label">Saturn</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question3" value="Earth">
-                <label class="form-check-label">Earth</label>
-            </div>
-            <div class="alert alert-danger" role="alert">Please answer this question.</div>
-        </div>
-
-        <div class="question mb-3">
-            <label>Question 4: Who developed the theory of relativity?</label><br>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question4" value="Albert Einstein" required>
-                <label class="form-check-label">Albert Einstein</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question4" value="Isaac Newton">
-                <label class="form-check-label">Isaac Newton</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question4" value="Galileo Galilei">
-                <label class="form-check-label">Galileo Galilei</label>
-            </div>
-            <div class="alert alert-danger" role="alert">Please answer this question.</div>
-        </div>
-
-        <div class="question mb-3">
-            <label>Question 5: What is the chemical symbol for water?</label><br>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question5" value="H2O" required>
-                <label class="form-check-label">H2O</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question5" value="O2">
-                <label class="form-check-label">O2</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question5" value="CO2">
-                <label class="form-check-label">CO2</label>
-            </div>
-            <div class="alert alert-danger" role="alert">Please answer this question.</div>
-        </div>
-
-        <div class="question mb-3">
-            <label>Question 6: What is the capital city of France?</label><br>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question6" value="Paris" required>
-                <label class="form-check-label">Paris</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question6" value="Berlin">
-                <label class="form-check-label">Berlin</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question6" value="Madrid">
-                <label class="form-check-label">Madrid</label>
-            </div>
-            <div class="alert alert-danger" role="alert">Please answer this question.</div>
-        </div>
-
-        <div class="question mb-3">
-            <label>Question 7: Which element has the atomic number 1?</label><br>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question7" value="Hydrogen" required>
-                <label class="form-check-label">Hydrogen</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question7" value="Helium">
-                <label class="form-check-label">Helium</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question7" value="Oxygen">
-                <label class="form-check-label">Oxygen</label>
-            </div>
-            <div class="alert alert-danger" role="alert">Please answer this question.</div>
-        </div>
-
-        <div class="question mb-3">
-            <label>Question 8: What is the smallest unit of life?</label><br>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question8" value="Cell" required>
-                <label class="form-check-label">Cell</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question8" value="Atom">
-                <label class="form-check-label">Atom</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question8" value="Molecule">
-                <label class="form-check-label">Molecule</label>
-            </div>
-            <div class="alert alert-danger" role="alert">Please answer this question.</div>
-        </div>
-
-        <div class="question mb-3">
-            <label>Question 9: What is the powerhouse of the cell?</label><br>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question9" value="Mitochondria" required>
-                <label class="form-check-label">Mitochondria</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question9" value="Nucleus">
-                <label class="form-check-label">Nucleus</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question9" value="Ribosome">
-                <label class="form-check-label">Ribosome</label>
-            </div>
-            <div class="alert alert-danger" role="alert">Please answer this question.</div>
-        </div>
-
-        <div class="question mb-3">
-            <label>Question 10: What is the largest organ in the human body?</label><br>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question10" value="Skin" required>
-                <label class="form-check-label">Skin</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question10" value="Liver">
-                <label class="form-check-label">Liver</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question10" value="Heart">
-                <label class="form-check-label">Heart</label>
-            </div>
-            <div class="alert alert-danger" role="alert">Please answer this question.</div>
-        </div>
-
-        <!-- User Information Form  -->
-
-        <div class="mb-3">
-            <label for="userName" class="form-label">Name:</label>
-            <input type="text" class="form-control" id="userName" name="Name" required>
-        </div>
-        <div class="mb-3">
-            <label for="userEmail" class="form-label">Email:</label>
-            <input type="email" class="form-control" id="userEmail" name="Email" required>
-        </div>
-        <div class="mb-3">
-            <label for="quizScore" class="form-label">Quiz score will be shown as soon as you click submit:</label>
-            <textarea class="form-control" id="quizScore" name="Message" rows="2" readonly></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-dark btn-submit">Submit Quiz</button>
-    </form>
-    <span id="msg"></span>
-</div>
-
-<script>
-
-    // Timer Functionality
-    const totalTime = 5 * 60; // 5 minutes in seconds
-
-    let timeLeft = totalTime;
-
-    function updateTimer() {
-        const minutes = Math.floor(timeLeft / 60);
-        const seconds = timeLeft % 60;
-        document.getElementById('timer').textContent = `Time Remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        timeLeft--;
-
-        if (timeLeft < 0) {
-            clearInterval(timerInterval);
-            alert("Time's up!");
-            submitQuiz();
-        }
-    }
-
-    const timerInterval = setInterval(updateTimer, 1000);
-
-    // Form Validation and Submission
-    document.getElementById("quizForm").addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        let valid = true;
-        const questions = document.querySelectorAll(".question");
-
-        // Validate if each question is answered
-
-        questions.forEach((question) => {
-            const alert = question.querySelector(".alert");
-            const options = question.querySelectorAll("input[type='radio']");
-            let answered = false;
-            options.forEach(option => {
-                if (option.checked) {
-                    answered = true;
-                }
-            });
-            if (!answered) {
-                valid = false;
-                alert.style.display = "block";
-            } else {
-                alert.style.display = "none";
-            }
-        });
-
-        if (valid) {
-            submitQuiz();
-        } else {
-            alert("Please answer all questions before submitting.");
-        }
-    });
-
-    function submitQuiz() {
-    // Calculate score
-    let score = 0;
-    const correctAnswers = {
-        question1: "100°C",
-        question2: "Mars",
-        question3: "Jupiter",
-        question4: "Albert Einstein",
-        question5: "H2O",
-        question6: "Paris",
-        question7: "Hydrogen",
-        question8: "Cell",
-        question9: "Mitochondria",
-        question10: "Skin"
-    };
-
-    // Check answers and calculate score
-    for (let i = 1; i <= 10; i++) {
-        const questionName = `question${i}`;
-        if (document.querySelector(`input[name="${questionName}"]:checked`) &&
-            document.querySelector(`input[name="${questionName}"]:checked`).value === correctAnswers[questionName]) {
-            score++;
-        }
-    }
-
-    // Store the score in localStorage
-    localStorage.setItem("quizScore", score);
-
-    // Display score in the readonly textarea
-    document.getElementById('quizScore').value = `Your quiz score is: ${score}/10`;
-
-    // Submit the form data to Google Sheets
-    const form = document.forms['quizForm'];
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzBY_7mmi3pqJ2Kc2SLBv2g3O6yoDGYy7ThLUpNGjNyVN6YQR1BzgnrKF6eRdZZxwm6eA/exec';
-    const msg = document.getElementById("msg");
-
-    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-        .then(response => {
-            msg.innerHTML = "Quiz submitted successfully!";
-            setTimeout(function () {
-                msg.innerHTML = "";
-                form.reset();
-                clearInterval(timerInterval); // Stop the timer after submission
-                // Redirect to the goodbye page (result.html)
-                window.location.href = "result.html";
-            }, 3000);
-        })
-        .catch(error => console.error('Error!', error.message));
-}
-
-
-    
-</script>
-
+    <div class="container">
+        <!-- Brain Icon -->
+        <i class="fas fa-brain icon"></i>
+        <h1>Welcome to the Legends Quiz!</h1>
+        <p>Test your knowledge with our quiz. <br> Click the button below to start.</p>
+        <a href="start.html" class="btn btn-dark btn-lg">Start Quiz</a>
+    </div>
 </body>
 </html>
-
