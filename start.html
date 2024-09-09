@@ -24,7 +24,6 @@
             box-shadow: 0px 0px 10px rgb(0, 0, 0);
             max-width: 600px;
             border-radius: 10px;
-            
         }
 
         .question {
@@ -47,6 +46,7 @@
         textarea {
             resize: none;
         }
+
         .btn-dark:hover {
             background-color: #555;
             border-color: #555;
@@ -61,6 +61,7 @@
     <div id="timer" class="text-center">Time Remaining: 2:00</div> <!-- Timer Display -->
     <form id="quizForm">
 
+        <!-- Quiz Questions -->
         <!-- Quiz Questions -->
         <div class="question mb-3">
             <label>Question 1: Which series became Netflix's biggest ever show in September 2021?</label><br>
@@ -232,6 +233,8 @@
             <div class="alert alert-danger" role="alert">Please answer this question.</div>
         </div>
 
+        <!-- More Questions... -->
+
         <!-- User Information Form  -->
 
         <div class="mb-3">
@@ -254,27 +257,25 @@
 
 <script>
 
-    
     // Timer Functionality
-const totalTime = 2 * 60; // 2 minutes in seconds
+    const totalTime = 2 * 60; // 2 minutes in seconds
 
-let timeLeft = totalTime;
+    let timeLeft = totalTime;
 
-function updateTimer() {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    document.getElementById('timer').textContent = `Time Remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    timeLeft--;
+    function updateTimer() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        document.getElementById('timer').textContent = `Time Remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        timeLeft--;
 
-    if (timeLeft < 0) {
-        clearInterval(timerInterval);
-        alert("Time's up!");
-        submitQuiz();
+        if (timeLeft < 0) {
+            clearInterval(timerInterval);
+            alert("Time's up!");
+            submitQuiz();
+        }
     }
-}
 
-const timerInterval = setInterval(updateTimer, 1000);
-
+    const timerInterval = setInterval(updateTimer, 1000);
 
 
     // Form Validation and Submission
@@ -285,7 +286,6 @@ const timerInterval = setInterval(updateTimer, 1000);
         const questions = document.querySelectorAll(".question");
 
         // Validate if each question is answered
-
         questions.forEach((question) => {
             const alert = question.querySelector(".alert");
             const options = question.querySelectorAll("input[type='radio']");
@@ -311,56 +311,63 @@ const timerInterval = setInterval(updateTimer, 1000);
     });
 
     function submitQuiz() {
-    // Calculate score
-    let score = 0;
-    const correctAnswers = {
-        question1: "Squid Game",
-        question2: "73",
-        question3: "9.58 seconds",
-        question4: "547.5",
-        question5: "7!",
-        question6: "6!",
-        question7: "Uruguay",
-        question8: "Brazil",
-        question9: "Turkey",
-        question10: "Lionel Messi"
-    };
+        // Calculate score
+        let score = 0;
+        const correctAnswers = {
+            question1: "Squid Game",
+            question2: "73",
+            question3: "9.58 seconds",
+            question4: "547.5",
+            question5: "7!",
+            question6: "6!",
+            question7: "Uruguay",
+            question8: "Brazil",
+            question9: "Turkey",
+            question10: "Lionel Messi"
+        };
 
-    // Check answers and calculate score
-    for (let i = 1; i <= 10; i++) {
-        const questionName = `question${i}`;
-        if (document.querySelector(`input[name="${questionName}"]:checked`) &&
-            document.querySelector(`input[name="${questionName}"]:checked`).value === correctAnswers[questionName]) {
-            score++;
+        // Check answers and calculate score
+        for (let i = 1; i <= 10; i++) {
+            const questionName = `question${i}`;
+            if (document.querySelector(`input[name="${questionName}"]:checked`) &&
+                document.querySelector(`input[name="${questionName}"]:checked`).value === correctAnswers[questionName]) {
+                score++;
+            }
         }
+
+        // Get current date and time
+        const currentDate = new Date();
+        const submissionTime = currentDate.toLocaleString(); // Format: 'MM/DD/YYYY, HH:MM:SS AM/PM'
+
+        // Store the score and time in localStorage (optional)
+        localStorage.setItem("quizScore", score);
+        localStorage.setItem("submissionTime", submissionTime);
+
+        // Display score and time in the readonly textarea
+        document.getElementById('quizScore').value = `Your quiz score is: ${score}/10. Submitted at: ${submissionTime}`;
+
+        // Submit the form data to Google Sheets
+        const form = document.forms['quizForm'];
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzBY_7mmi3pqJ2Kc2SLBv2g3O6yoDGYy7ThLUpNGjNyVN6YQR1BzgnrKF6eRdZZxwm6eA/exec';
+        const msg = document.getElementById("msg");
+
+        // Add submission time to the form data
+        const formData = new FormData(form);
+        formData.append('SubmissionTime', submissionTime);
+
+        fetch(scriptURL, { method: 'POST', body: formData })
+            .then(response => {
+                msg.innerHTML = "Quiz submitted successfully!";
+                setTimeout(function () {
+                    msg.innerHTML = "";
+                    form.reset();
+                    clearInterval(timerInterval); // Stop the timer after submission
+                    // Redirect to the goodbye page (result.html)
+                    window.location.href = "result.html";
+                }, 3000);
+            })
+            .catch(error => console.error('Error!', error.message));
     }
-
-    // Store the score in localStorage
-    localStorage.setItem("quizScore", score);
-
-    // Display score in the readonly textarea
-    document.getElementById('quizScore').value = `Your quiz score is: ${score}/10`;
-
-    // Submit the form data to Google Sheets
-    const form = document.forms['quizForm'];
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzBY_7mmi3pqJ2Kc2SLBv2g3O6yoDGYy7ThLUpNGjNyVN6YQR1BzgnrKF6eRdZZxwm6eA/exec';
-    const msg = document.getElementById("msg");
-
-    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-        .then(response => {
-            msg.innerHTML = "Quiz submitted successfully!";
-            setTimeout(function () {
-                msg.innerHTML = "";
-                form.reset();
-                clearInterval(timerInterval); // Stop the timer after submission
-                // Redirect to the goodbye page (result.html)
-                window.location.href = "result.html";
-            }, 3000);
-        })
-        .catch(error => console.error('Error!', error.message));
-}
-
-
     
 </script>
 
